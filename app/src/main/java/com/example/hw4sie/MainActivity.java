@@ -1,3 +1,9 @@
+//11.19.19 HW4 by Samuel Epstein
+// This project consists of two activities (Main Activity and Search)
+// The Main Activity includes a form for users to enter in bird sightings with name, zipcode, and their name
+// The Search activity allows users to search for the last bird sighting in that zip code
+
+
 package com.example.hw4sie;
 
 import androidx.annotation.NonNull;
@@ -42,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
+//create menu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
@@ -51,14 +57,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-
+//set up firebase database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("myBirds");
 
+        // create a Bird object with the info a person fills out
         if (view == buttonSubmit) {
             String createBirdName = editTextBirdName.getText().toString();
             String createPersonName = editTextPersonName.getText().toString();
-            String createZipcode = editTextZipcode.getText().toString();
+            Integer createZipcode = Integer.parseInt(editTextZipcode.getText().toString());
 
             Bird createBird = new Bird(createBirdName, createZipcode, createPersonName);
 
@@ -69,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
+//Navigate via the menu
         if (item.getItemId() == R.id.SearchPage) {
             Intent searchIntent = new Intent(this, SearchActivity.class );
             startActivity(searchIntent);

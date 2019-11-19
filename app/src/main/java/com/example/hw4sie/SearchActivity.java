@@ -32,7 +32,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
+//Standard stuff
         buttonSearch = findViewById(R.id.buttonSearchSubmit);
 
         editTextSearchZipcode = findViewById(R.id.editTextSearchZipcode);
@@ -45,6 +45,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+  //menu creation
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -52,14 +53,15 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-
+//firebase db
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("myBirds");
 
+        // Sets searchedZipcode to the value entered when users hit the button
         if (view == buttonSearch) {
-            String searchedZipcode = editTextSearchZipcode.getText().toString();
+            Integer searchedZipcode = Integer.parseInt(editTextSearchZipcode.getText().toString());
 
-            //Change it to = when change to integer
+            //Firebase magic of sorting by zipcode and returning values of the most recent bird object created at the given zipcode
             myRef.orderByChild("zipcode").equalTo(searchedZipcode).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -100,6 +102,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        //menu navigation
         if (item.getItemId() == R.id.Home) {
 
             Intent homeIntent = new Intent(this, MainActivity.class);
